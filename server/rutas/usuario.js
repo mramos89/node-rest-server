@@ -3,13 +3,14 @@ const Usuario = require('../models/usuario')
 const express = require('express')
 const bcrypt = require('bcrypt');
 const _ = require('underscore')
-const { response } = require('express')
+const { verificaToken, verificarAdminRole } = require('../middleware/autenticacion.js')
+
 const app = express()
     // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }))
 
 
-app.get('/usuario', function(req, res) {
+app.get('/usuario', verificaToken, (req, res) => { //verificaToken es el middleware que quiero que se ejecute donde validamos el token  y tienes que llamar el next par que cotninue
     let desde = req.query.desde || 0; //parametros opcionales ?
     desde = Number(desde);
 
@@ -39,7 +40,8 @@ app.get('/usuario', function(req, res) {
         })
 })
 
-app.post('/usuario', function(req, res) {
+app.post('/usuario', [verificaToken, verificarAdminRole], (req, res) => {
+
     let body = req.body;
     let usuario = new Usuario({
         nombre: body.nombre,
@@ -64,7 +66,7 @@ app.post('/usuario', function(req, res) {
     })
 })
 
-app.put('/usuario/:idUsuario', function(req, res) {
+app.put('/usuario/:idUsuario', [verificaToken, verificarAdminRole], (req, res) => {
     let id = req.params.idUsuario;
     let body = _.pick(req.body, ['nombre', 'email', 'img', 'role', 'estado']);
 
@@ -85,7 +87,7 @@ app.put('/usuario/:idUsuario', function(req, res) {
 
     })
 })
-app.delete('/usuario/:idUsuario', function(req, res) {
+app.delete('/usuario/:idUsuario', [verificaToken, verificarAdminRole], (req, res) => {
     let id = req.params.idUsuario;
     let body = _.pick(req.body, ['estado']);
 

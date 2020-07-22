@@ -7,10 +7,18 @@ process.env.PORT = process.env.PORT || 3000;
 //Entorno
 //==================
 process.env.NODE_ENV = process.env.NODE_ENV || 'dev'
+    //==================
+    //Vencimiento del token
+    //==================
+process.env.CADUCIDAD_TOKEN = '720h'
+    //==================
+    //seed de autenticacion
+    //==================
 
-//==================
-//Base de datos
-//==================
+process.env.SEED = process.env.SEED || 'este-es-secret-dev'
+    //==================
+    //Base de datos
+    //==================
 
 let urlDB;
 

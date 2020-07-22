@@ -2,7 +2,9 @@ const express = require('express')
 const mongoose = require('mongoose');
 const app = express()
 require('./config/config');
-app.use(require('./rutas/usuario'))
+
+/*Configuracion global de rutas */
+app.use(require('./rutas/index.js'))
 
 /*Conexión con mongo*/
 mongoose.connect(process.env.URLDB, { useNewUrlParser: true, useUnifiedTopology: true }, (error) => {
