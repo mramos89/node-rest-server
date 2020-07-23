@@ -1,6 +1,7 @@
 const express = require('express')
 const mongoose = require('mongoose');
 const app = express()
+const path = require('path') // esto sirve para mapear url 
 require('./config/config');
 
 /*Configuracion global de rutas */
@@ -19,3 +20,7 @@ mongoose.set('useCreateIndex', true);
 app.listen(process.env.PORT, () => {
     console.log('Escuchando en el ', process.env.PORT);
 })
+
+//*Habilitar paginas web */
+
+app.use(express.static(path.resolve(__dirname, '../public'))); //invextigar sobre express.static en clases anteriores.
